@@ -5,13 +5,21 @@ import ResultTable from "./components/ResultTable.js";
 
 class App extends React.Component {
   state = {
-    count: 0,
-    results: [],
+    employees: [],
   };
   //getting result from api calll
+  // componentDidMount() {
+  //   this.searchGiphy("kittens");
+  // }
+
+  // searchEmployee = query => {
+  //   API.search(query)
+  //     .then(res => this.setState({ results: res.data.results }))
+  //     .catch(err => console.log(err));
+  // };
   componentDidMount() {
     API.search()
-      .then((res) => this.setState({ results: res.data.results }))
+      .then((res) => this.setState({ employees: res.data.results }))
       .catch((err) => console.log(err));
   }
 
@@ -36,7 +44,8 @@ class App extends React.Component {
             />
           </form>
         </nav>
-        <ResultTable data={this.state.results} />
+
+        <ResultTable employees={this.state.employees} />
       </div>
     );
   }
