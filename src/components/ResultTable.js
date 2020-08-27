@@ -12,6 +12,7 @@ function ResultTable(props) {
             <th scope="col">Phone</th>
             <th scope="col">E-mail</th>
             <th scope="col">DOB</th>
+            <th scope="col">Photo</th>
           </tr>
         </thead>
         <tbody>
@@ -22,6 +23,10 @@ function ResultTable(props) {
               <td>{employee.cell}</td>
               <td>{employee.email}</td>
               <td>{employee.dob.date.slice(0, 10)}</td>
+              <td>
+                {" "}
+                <img src={employee.picture.medium} alt={employee.name.first} />
+              </td>
             </tr>
           ))}
         </tbody>

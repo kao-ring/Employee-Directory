@@ -7,21 +7,34 @@ class App extends React.Component {
   state = {
     employees: [],
   };
-  //getting result from api calll
-  // componentDidMount() {
-  //   this.searchGiphy("kittens");
-  // }
 
-  // searchEmployee = query => {
-  //   API.search(query)
-  //     .then(res => this.setState({ results: res.data.results }))
-  //     .catch(err => console.log(err));
-  // };
   componentDidMount() {
     API.search()
-      .then((res) => this.setState({ employees: res.data.results }))
+      .then((res) => {
+        this.setState({ employees: res.data.results });
+        // console.log(res.data.results);
+      })
       .catch((err) => console.log(err));
   }
+
+  handleSelectChange = (event) => {
+    const select = event.target.value;
+    console.log(select);
+  };
+
+  handleInputChange = (event) => {
+    const searchLetter = event.target.value.trim().toLowerCase();
+    console.log(searchLetter);
+    API.search()
+      .then((res) => {
+        const newState = res.data.results.filter(
+          (employee) =>
+            employee.name.first.toLowerCase().includes(searchLetter) === true
+        );
+        this.setState({ employees: newState });
+      })
+      .catch((err) => console.log(err));
+  };
 
   render() {
     return (
@@ -29,18 +42,29 @@ class App extends React.Component {
         <div className="jumbotron text-center">
           <h1 className="display-3">Employee Directory</h1>
           <p className="lead">
-            Easy to search your employee by fisrt name, last name, age, and
+            Easy to search your employee by fisrt name, last name, e-mail, or
             phone number.
           </p>
         </div>
         <nav className="navbar navbar-light bg-light text-center">
           <a className="navbar-brand">Employee Search</a>
           <form className="form-inline">
+            <select
+              class="custom-select my-1 mr-sm-2"
+              onChange={this.handleSelectChange}
+            >
+              <option selected>Choose...</option>
+              <option value="name.first">First Name</option>
+              <option value="name.last">Last Name</option>
+              <option value="cell">Phone</option>
+              <option value="email">E-mail</option>
+              <option value="dob">DOB</option>
+            </select>
             <input
               className="form-control mr-sm-2"
               type="search"
+              onChange={this.handleInputChange}
               placeholder="Search"
-              aria-label="Search"
             />
           </form>
         </nav>
@@ -52,3 +76,4 @@ class App extends React.Component {
 }
 
 export default App;
+// select={} search={}
