@@ -6,29 +6,32 @@ import ResultTable from "./components/ResultTable.js";
 class App extends React.Component {
   state = {
     employees: [],
+    select: "",
   };
 
   componentDidMount() {
     API.search()
       .then((res) => {
         this.setState({ employees: res.data.results });
-        // console.log(res.data.results);
       })
       .catch((err) => console.log(err));
   }
 
   handleSelectChange = (event) => {
     const select = event.target.value;
-    console.log(select);
+    this.setState({ select: select });
+    // console.log(select);
   };
 
   handleInputChange = (event) => {
     const searchLetter = event.target.value.trim().toLowerCase();
-    console.log(searchLetter);
+    console.log(searchLetter + " : " + this.state.select);
+
     API.search()
       .then((res) => {
         const newState = res.data.results.filter(
           (employee) =>
+            //Switch case?? first/last/cell/email/dob - this.state.select
             employee.name.first.toLowerCase().includes(searchLetter) === true
         );
         this.setState({ employees: newState });
@@ -50,7 +53,7 @@ class App extends React.Component {
           <a className="navbar-brand">Employee Search</a>
           <form className="form-inline">
             <select
-              class="custom-select my-1 mr-sm-2"
+              className="custom-select my-1 mr-sm-2"
               onChange={this.handleSelectChange}
             >
               <option selected>Choose...</option>
