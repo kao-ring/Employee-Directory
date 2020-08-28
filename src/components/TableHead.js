@@ -5,19 +5,19 @@ function TableHead(props) {
     <thead>
       <tr>
         <th scope="col">Photo</th>
-        <th scope="col" value="first" onClick={props.sortHandle}>
+        <th scope="col" value="name.first" onClick={props.sortHandle}>
           First Name
         </th>
-        <th scope="col" value="last">
+        <th scope="col" value="name.last" onClick={props.sortHandle}>
           Last Name
         </th>
-        <th scope="col" value="cell">
+        <th scope="col" value="cell" onClick={props.sortHandle}>
           Phone
         </th>
-        <th scope="col" value="email">
+        <th scope="col" value="email" onClick={props.sortHandle}>
           E-mail
         </th>
-        <th scope="col" value="dob">
+        <th scope="col" value="dob.date" onClick={props.sortHandle}>
           DOB
         </th>
       </tr>

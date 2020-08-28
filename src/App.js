@@ -9,6 +9,7 @@ class App extends React.Component {
     employees: [],
     select: "",
     order: "descend",
+    orderBy: "",
   };
 
   componentDidMount() {
@@ -52,17 +53,48 @@ class App extends React.Component {
       .catch((err) => console.log(err));
   };
 
-  sortHandle = () => {
+  sortHandle = (event) => {
+    // const select = event.target.value;
+    console.log(event.target.getAttribute("value"));
+    this.setState({
+      orderBy: event.target.getAttribute("value"),
+    });
     if (this.state.order === "descend") {
+      this.handleSortByDescend();
       this.setState({
         order: "ascend",
       });
     } else {
+      this.handleSortByAscend();
       this.setState({
         order: "descend",
       });
     }
   };
+
+  handleSortByAscend() {
+    console.log("アセンドだよー。");
+    const sortedEmployees = this.state.employees.sort((a, b) => {
+      if (a[this.state.orderBy] < b[this.state.orderBy]) return -1;
+      if (a[this.state.orderBy] > b[this.state.orderBy]) return 1;
+      return 0;
+    });
+    this.setState({
+      employees: sortedEmployees,
+    });
+  }
+
+  handleSortByDescend() {
+    console.log("でセンドだよー。");
+    const sortedEmployees = this.state.employees.sort((a, b) => {
+      if (a[this.state.orderBy] < b[this.state.orderBy]) return 1;
+      if (a[this.state.orderBy] > b[this.state.orderBy]) return -1;
+      return 0;
+    });
+    this.setState({
+      employees: sortedEmployees,
+    });
+  }
 
   render() {
     return (
