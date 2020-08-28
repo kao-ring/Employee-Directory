@@ -20,20 +20,54 @@ class App extends React.Component {
   handleSelectChange = (event) => {
     const select = event.target.value;
     this.setState({ select: select });
-    // console.log(select);
   };
 
   handleInputChange = (event) => {
     const searchLetter = event.target.value.trim().toLowerCase();
     console.log(searchLetter + " : " + this.state.select);
+    // switch (this.state.select) {
+    //   case "first":
+    //     var selectSwitch = "name.";
+
+    //     break;
+
+    //   default:
+    //     break;
+    // }
 
     API.search()
       .then((res) => {
-        const newState = res.data.results.filter(
-          (employee) =>
-            //Switch case?? first/last/cell/email/dob - this.state.select
-            employee.name.first.toLowerCase().includes(searchLetter) === true
-        );
+        const newState = res.data.results.filter((employee) => {
+          //Switch case?? first/last/cell/email/dob - this.state.select
+          switch (this.state.select) {
+            case "first":
+              return (
+                employee.name.first.toLowerCase().includes(searchLetter) ===
+                true
+              );
+              break;
+            case "last":
+              return (
+                employee.name.last.toLowerCase().includes(searchLetter) === true
+              );
+              break;
+            case "cell":
+              return employee.cell.includes(searchLetter) === true;
+              break;
+            case "email":
+              return (
+                employee.email.toLowerCase().includes(searchLetter) === true
+              );
+              break;
+            case "dob":
+              return employee.dob.includes(searchLetter) === true;
+              break;
+            default:
+              return employee.name.first.includes(searchLetter) === true;
+
+              break;
+          }
+        });
         this.setState({ employees: newState });
       })
       .catch((err) => console.log(err));
@@ -50,15 +84,15 @@ class App extends React.Component {
           </p>
         </div>
         <nav className="navbar navbar-light bg-light text-center">
-          <a className="navbar-brand">Employee Search</a>
+          <h3>Employee Search</h3>
           <form className="form-inline">
             <select
               className="custom-select my-1 mr-sm-2"
               onChange={this.handleSelectChange}
             >
               <option>Choose...</option>
-              <option value="name.first">First Name</option>
-              <option value="name.last">Last Name</option>
+              <option value="first">First Name</option>
+              <option value="last">Last Name</option>
               <option value="cell">Phone</option>
               <option value="email">E-mail</option>
               <option value="dob">DOB</option>
@@ -79,4 +113,3 @@ class App extends React.Component {
 }
 
 export default App;
-// select={} search={}
