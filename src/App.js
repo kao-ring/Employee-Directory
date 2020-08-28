@@ -56,7 +56,7 @@ class App extends React.Component {
               className="custom-select my-1 mr-sm-2"
               onChange={this.handleSelectChange}
             >
-              <option selected>Choose...</option>
+              <option>Choose...</option>
               <option value="name.first">First Name</option>
               <option value="name.last">Last Name</option>
               <option value="cell">Phone</option>
