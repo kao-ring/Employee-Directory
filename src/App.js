@@ -2,11 +2,13 @@ import React from "react";
 import API from "./api.js";
 import "./App.css";
 import ResultTable from "./components/ResultTable.js";
+import TableHead from "./components/TableHead.js";
 
 class App extends React.Component {
   state = {
     employees: [],
     select: "",
+    order: "descend",
   };
 
   componentDidMount() {
@@ -25,52 +27,41 @@ class App extends React.Component {
   handleInputChange = (event) => {
     const searchLetter = event.target.value.trim().toLowerCase();
     console.log(searchLetter + " : " + this.state.select);
-    // switch (this.state.select) {
-    //   case "first":
-    //     var selectSwitch = "name.";
-
-    //     break;
-
-    //   default:
-    //     break;
-    // }
 
     API.search()
       .then((res) => {
         const newState = res.data.results.filter((employee) => {
-          //Switch case?? first/last/cell/email/dob - this.state.select
-          switch (this.state.select) {
-            case "first":
-              return (
-                employee.name.first.toLowerCase().includes(searchLetter) ===
-                true
-              );
-              break;
-            case "last":
-              return (
-                employee.name.last.toLowerCase().includes(searchLetter) === true
-              );
-              break;
-            case "cell":
-              return employee.cell.includes(searchLetter) === true;
-              break;
-            case "email":
-              return (
-                employee.email.toLowerCase().includes(searchLetter) === true
-              );
-              break;
-            case "dob":
-              return employee.dob.includes(searchLetter) === true;
-              break;
-            default:
-              return employee.name.first.includes(searchLetter) === true;
-
-              break;
+          if (this.state.select === "first") {
+            return (
+              employee.name.first.toLowerCase().includes(searchLetter) === true
+            );
+          } else if (this.state.select === "last") {
+            return (
+              employee.name.last.toLowerCase().includes(searchLetter) === true
+            );
+          } else if (this.state.select === "dob") {
+            return employee.dob.date.includes(searchLetter) === true;
+          } else if (this.state.select === "cell") {
+            return employee.cell.includes(searchLetter) === true;
+          } else if (this.state.select === "email") {
+            return employee.email.toLowerCase().includes(searchLetter) === true;
           }
         });
         this.setState({ employees: newState });
       })
       .catch((err) => console.log(err));
+  };
+
+  sortHandle = () => {
+    if (this.state.order === "descend") {
+      this.setState({
+        order: "ascend",
+      });
+    } else {
+      this.setState({
+        order: "descend",
+      });
+    }
   };
 
   render() {
@@ -105,8 +96,12 @@ class App extends React.Component {
             />
           </form>
         </nav>
-
-        <ResultTable employees={this.state.employees} />
+        <div className="container">
+          <table className="table table-hover">
+            <TableHead sortHandle={this.sortHandle} />
+            <ResultTable employees={this.state.employees} />
+          </table>
+        </div>
       </div>
     );
   }
