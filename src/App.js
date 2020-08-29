@@ -9,7 +9,7 @@ class App extends React.Component {
     employees: [],
     select: "",
     order: "descend",
-    orderBy: "",
+    orderBy: "first",
   };
 
   componentDidMount() {
@@ -55,10 +55,9 @@ class App extends React.Component {
 
   sortHandle = (event) => {
     // const select = event.target.value;
-    console.log(event.target.getAttribute("value"));
-    this.setState({
-      orderBy: event.target.getAttribute("value"),
-    });
+    // console.log(event.target.getAttribute("value"));
+    this.setState({ orderBy: event.target.getAttribute("value") });
+
     if (this.state.order === "descend") {
       this.handleSortByDescend();
       this.setState({
@@ -73,27 +72,94 @@ class App extends React.Component {
   };
 
   handleSortByAscend() {
-    console.log("アセンドだよー。");
-    const sortedEmployees = this.state.employees.sort((a, b) => {
-      if (a[this.state.orderBy] < b[this.state.orderBy]) return -1;
-      if (a[this.state.orderBy] > b[this.state.orderBy]) return 1;
-      return 0;
-    });
-    this.setState({
-      employees: sortedEmployees,
-    });
+    console.log("Ascendだよー。" + this.state.orderBy);
+    if (this.state.orderBy === "cell") {
+      this.state.employees.sort(function (a, b) {
+        if (a.cell > b.cell) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    } else if (this.state.orderBy === "email") {
+      this.state.employees.sort(function (a, b) {
+        if (a.email > b.email) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    } else if (this.state.orderBy === "first") {
+      this.state.employees.sort(function (a, b) {
+        if (a.name.first > b.name.first) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    } else if (this.state.orderBy === "last") {
+      this.state.employees.sort(function (a, b) {
+        if (a.name.last > b.name.last) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    } else if (this.state.orderBy === "dob") {
+      this.state.employees.sort(function (a, b) {
+        if (a.dob.date > b.dob.date) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    }
   }
 
   handleSortByDescend() {
-    console.log("でセンドだよー。");
-    const sortedEmployees = this.state.employees.sort((a, b) => {
-      if (a[this.state.orderBy] < b[this.state.orderBy]) return 1;
-      if (a[this.state.orderBy] > b[this.state.orderBy]) return -1;
-      return 0;
-    });
-    this.setState({
-      employees: sortedEmployees,
-    });
+    console.log("Descendだよー。" + this.state.orderBy);
+    console.log("Ascendだよー。" + this.state.orderBy);
+    if (this.state.orderBy === "cell") {
+      this.state.employees.sort(function (a, b) {
+        if (a.cell > b.cell) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+    } else if (this.state.orderBy === "email") {
+      this.state.employees.sort(function (a, b) {
+        if (a.email > b.email) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+    } else if (this.state.orderBy === "first") {
+      this.state.employees.sort(function (a, b) {
+        if (a.name.first > b.name.first) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+    } else if (this.state.orderBy === "last") {
+      this.state.employees.sort(function (a, b) {
+        if (a.name.last > b.name.last) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+    } else if (this.state.orderBy === "dob") {
+      this.state.employees.sort(function (a, b) {
+        if (a.dob.date > b.dob.date) {
+          return -1;
+        } else {
+          return 1;
+        }
+      });
+    }
   }
 
   render() {

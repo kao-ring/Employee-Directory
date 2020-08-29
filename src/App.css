@@ -1,3 +1,6 @@
 .jumbotron {
   background: url(img01-2.jpg);
 }
+#sort {
+  font-size: small;
+}

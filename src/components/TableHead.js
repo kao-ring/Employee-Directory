@@ -4,11 +4,13 @@ function TableHead(props) {
   return (
     <thead>
       <tr>
-        <th scope="col">Photo</th>
-        <th scope="col" value="name.first" onClick={props.sortHandle}>
+        <th scope="col" id="sort">
+          (Sort by...)
+        </th>
+        <th scope="col" value="first" onClick={props.sortHandle}>
           First Name
         </th>
-        <th scope="col" value="name.last" onClick={props.sortHandle}>
+        <th scope="col" value="last" onClick={props.sortHandle}>
           Last Name
         </th>
         <th scope="col" value="cell" onClick={props.sortHandle}>
@@ -17,7 +19,7 @@ function TableHead(props) {
         <th scope="col" value="email" onClick={props.sortHandle}>
           E-mail
         </th>
-        <th scope="col" value="dob.date" onClick={props.sortHandle}>
+        <th scope="col" value="dob" onClick={props.sortHandle}>
           DOB
         </th>
       </tr>
