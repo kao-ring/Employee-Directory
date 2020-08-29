@@ -46,6 +46,10 @@ class App extends React.Component {
             return employee.cell.includes(searchLetter) === true;
           } else if (this.state.select === "email") {
             return employee.email.toLowerCase().includes(searchLetter) === true;
+          } else {
+            return (
+              employee.name.first.toLowerCase().includes(searchLetter) === true
+            );
           }
         });
         this.setState({ employees: newState });
