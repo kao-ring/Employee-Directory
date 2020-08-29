@@ -8,7 +8,7 @@ class App extends React.Component {
   state = {
     employees: [],
     select: "",
-    order: "descend",
+    order: "ascend",
     orderBy: "first",
   };
 
@@ -54,8 +54,6 @@ class App extends React.Component {
   };
 
   sortHandle = (event) => {
-    // const select = event.target.value;
-    // console.log(event.target.getAttribute("value"));
     this.setState({ orderBy: event.target.getAttribute("value") });
 
     if (this.state.order === "descend") {
@@ -72,7 +70,6 @@ class App extends React.Component {
   };
 
   handleSortByAscend() {
-    console.log("Ascendだよー。" + this.state.orderBy);
     if (this.state.orderBy === "cell") {
       this.state.employees.sort(function (a, b) {
         if (a.cell > b.cell) {
@@ -117,8 +114,6 @@ class App extends React.Component {
   }
 
   handleSortByDescend() {
-    console.log("Descendだよー。" + this.state.orderBy);
-    console.log("Ascendだよー。" + this.state.orderBy);
     if (this.state.orderBy === "cell") {
       this.state.employees.sort(function (a, b) {
         if (a.cell > b.cell) {
